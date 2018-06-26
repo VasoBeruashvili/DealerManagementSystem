@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>    
+  
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/ress/bootstrap-flat.min.css" rel="stylesheet" />
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />    
+
+    <link href="~/Content/ress/jqx.base.css" rel="stylesheet" />
+    <link href="~/Content/ress/jqx.metro.css" rel="stylesheet" />
+    
+    <script src="~/Scripts/srcs/angular.min.js"></script>
+    <script src="~/Scripts/srcs/custom-functions.js"></script>
+    <script src="~/Scripts/srcs/moment.min.js"></script>
+
+    <script src="~/Scripts/srcs/jqxcore.js"></script>
+    <script src="~/Scripts/srcs/jqx-all.js"></script>
+    <script src="~/Scripts/srcs/jqxangular.js"></script>    
+
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+    @RenderSection("scripts", false)
+</head>
+<body>
+    <div id="overlay"></div>
+
+    @{
+        DealerManagementSystem.Utils.BusinessLogic _bl = new DealerManagementSystem.Utils.BusinessLogic();
+
+        double? contragentShoppingCartAmountSum = _bl.GetShoppingCartAmountSumByContragentId((Session["currentUser"] as Contragent).Id);
+    }
+
+    <div class="profile-line">
+        <div class="dropdown" style="float: right; margin-left: 50px; cursor: pointer;">
+            <a class="dropdown-toggle" data-toggle="dropdown" style="text-decoration: none;">
+                @DealerManagementSystem.Resources.Translator.Language
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>@Html.ActionLink(DealerManagementSystem.Resources.Translator.Georgian, "change", "language", new { lang = "ka-GE" }, null)</li>
+                <li>@Html.ActionLink(DealerManagementSystem.Resources.Translator.English, "change", "language", new { lang = "en-US" }, null)</li>
+            </ul>
+        </div>
+
+        <div style="float: right;">
+            @Html.ActionLink(DealerManagementSystem.Resources.Translator.Logout, "logout", "account", null, new { @style = "text-decoration: none; margin-right: 3px;" })
+            <apsn style="color: #777;">/</apsn>
+            @Html.ActionLink(DealerManagementSystem.Resources.Translator.Profile, "profileInfo", "home", null, new { @style = "text-decoration: none; margin-left: 3px;" })            
+        </div>        
+    </div>    
+
+    <div class="top-navbar-menu">        
+        <div class="top-navbar-menu-content">                            
+            <div style="float: left;">
+                <ul>
+                    <li style="margin-right: 30px; margin-top: 1px;">
+                        <a href="@Url.Action("index", "home")"><img src="~/Content/ress/images/comtek_logo.png" style="height: 40px;" /></a>
+                    </li>
+
+                    <li style="margin-top: -15px; font-size: 25px;">@Html.ActionLink(DealerManagementSystem.Resources.Translator.Main, "index", "home")</li>
+                    <li style="margin-top: -15px; font-size: 25px;">@Html.ActionLink(DealerManagementSystem.Resources.Translator.Catalog, "catalog", "home")</li>
+                    <li style="margin-top: -15px; font-size: 25px;">@Html.ActionLink(DealerManagementSystem.Resources.Translator.Orders, "orders", "home")</li>
+                    <li style="margin-top: -15px; font-size: 25px;">@Html.ActionLink(DealerManagementSystem.Resources.Translator.History, "history", "home")</li>
+                </ul>
+            </div>
+
+            <div class="top-navbar-menu-search">                         
+                <div class="basket">
+                    <a class="btn btn-default shopping-cart" href="@Url.Action("shoppingCart", "home")"><i class="fa fa-shopping-cart"></i> <span id="shoppingCart">@contragentShoppingCartAmountSum</span></a>
+                </div>
+
+                <p style="font-size: 16px; margin-left: -10px;"><i class="fa fa-phone" style="color: #2fb991;"></i> 2 19 25 01</p>
+
+                <a class="btn-search btn btn-default" onclick="searchCatalog()"><i class="fa fa-search"></i></a>
+                <input id="searchPhrase" type="text" class="form-control" />
+            </div>
+        </div>
+    </div>
+    
+    <div class="sub-navigation">       
+        @if (ViewBag.Title == "Main" || ViewBag.Title == "მთავარი")
+        {            
+            <p>@ViewBag.Title</p>
+        }
+        else
+        {
+            <p><a href="/">@ViewBag.PreTitle</a> <i class="fa fa-angle-double-right"></i> @ViewBag.Title</p>
+        }
+    </div>
+
+    <div class="container-flud body-content" style="padding-left: 100px; padding-right: 100px; height: 100%; padding-top: 20px;">
+        @RenderBody()        
+    </div>
+</body>
+</html>

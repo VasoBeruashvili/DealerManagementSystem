@@ -1,0 +1,140 @@
+﻿@{
+    ViewBag.Title = DealerManagementSystem.Resources.Translator.Main;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var contragent_id = ((Contragent)Session["currentUser"]).Id;
+    var lang = HttpContext.Current.Request.UserLanguages[0];
+    lang = lang + '-' + lang.ToUpper();
+}
+
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/highcharts/highcharts.js"></script>
+
+    <script src="~/Scripts/srcs/angular.min.js"></script>
+    <script src="~/Scripts/srcs/angular-locale_ge.js"></script>
+    <script src="~/Scripts/srcs/ui-bootstrap-tpls-0.13.1.min.js"></script>
+    <script src="~/Scripts/srcs/ka.js"></script>
+    <script src="~/Scripts/srcs/custom-functions.js"></script>
+
+    <script type="text/javascript">
+        var loading_text = '@DealerManagementSystem.Resources.Translator.Loading';
+        var customer_id= @contragent_id;
+    </script>
+    
+    <script type="text/javascript" src="~/Scripts/app/statistic.js"></script>
+    <link href="~/css/font-larisome.min.css" rel="stylesheet" type="text/css" />
+}
+<form name="frm" id="form">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label for="date_from" class="col-md-2">@DealerManagementSystem.Resources.Translator.Period:</label>
+                <div class="col-md-3">
+                    <input type="number" id="year" min="2010" class="form-control input-sm" value="@DateTime.Now.Year" onchange="DateChange()" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="chart_category_cycle">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="chart_debt">
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-app="statistic-app" ng-controller="statistic-ctrl">
+        <div class="col-md-6">
+            <div id="chart_category_summary">
+            </div>
+        </div>
+        <div class="col-md-6" style="border: 1px solid #2fb991; padding: 30px; margin-bottom: 10px;">
+            <div class="form-group">
+                <div class="col-md-3 text-right" id="remaining_time"></div>
+                <div class="col-md-9">ხელშეკრულების ვადის გასვლამდე</div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 text-right" id="contragentCurrency"></div>
+                <div class="col-md-9">ბალანსის ვალუტა</div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 text-right" id="mimdinare_gadasaxdeli"></div>
+                <div class="col-md-9">მიმდინარე გადასახდელი დავალიანება</div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 text-right" id="sruli_mimdinare_davalianeba"></div>
+                <div class="col-md-9">მიმდინარე საერთო დავალიანება</div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 text-right" id="avg_overdue_amount"></div>
+                <div class="col-md-9">საშუალო ვადაგადაცილების წლიური მაჩვენებელი *</div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 text-right" id="avg_overdue_days"></div>
+                <div class="col-md-9">საშუალო ვადაგადაცილების წლიური მაჩვენებელი **</div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 text-right">N/A</div>
+                <div class="col-md-9">საურავი გადაცილებულ დღეებზე</div>
+            </div>            
+        </div>
+        <div style="font-style: italic; font-size: 12px;">
+            *) ითვლება, ვადაგადაცილებულ ინვოისებზე დარჩენილი, ჩასარიცხი თანხების საშუალოს აღებით
+            <br />
+            **) ითვლება, ვადაგადაცილებული საინვოისე დღეებიდან საშუალოს აღებით
+        </div>
+
+        <div class="col-md-6" style="border: 1px solid #2fb991; padding: 30px; margin-top: 10px;">
+            <div class="form-inline" style="margin-bottom: 10px;">
+                <div class="input-group">
+                    <input ng-click="openFromDatepicker($event)" type="text" class="form-control input-sm" datepicker-options="dateOptions" datepicker-popup="yyyy-MM-dd" ng-model="date_from" is-open="from_opened" on-open-focus="false" close-text="დახურვა" clear-text="გასუფთავება" current-text="დღეს">
+                    <div class="input-group-btn" dropdown>
+                        <button type="button" id="single-button" style="margin: 0 4px 0 4px;" class="btn btn-sm btn-default" dropdown-toggle tabindex="-1">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                        <ul class="dropdown-menu choices" role="menu" aria-labelledby="single-button" style="cursor: pointer;">
+                            <li role="menuitem"><a ng-click="menuChoiceClick('today')">დღეს</a></li>
+                            <li role="menuitem"><a ng-click="menuChoiceClick('year')">მიმდინარე წელიწადი</a></li>
+                            <li role="menuitem" class="divider"></li>
+                            <li role="menuitem"><a ng-click="menuChoiceClick('kvartali1')">I კვარტალი</a></li>
+                            <li role="menuitem"><a ng-click="menuChoiceClick('kvartali2')">II კვარტალი</a></li>
+                            <li role="menuitem"><a ng-click="menuChoiceClick('kvartali3')">III კვარტალი</a></li>
+                            <li role="menuitem"><a ng-click="menuChoiceClick('kvartali4')">IV კვარტალი</a></li>
+                            <li role="menuitem" class="divider"></li>
+                            <li role="menuitem"><a ng-click="menuChoiceClick('yan')">01 - იანვარი</a></li>
+                            <li role="menuitem"><a ng-click="menuChoiceClick('feb')">02 - თებერვალი</a></li>
+                            <li role="menuitem"><a ng-click="menuChoiceClick('mar')">03 - მარტი</a></li>
+                            <li role="menuitem"><a ng-click="menuChoiceClick('apr')">04 - აპრილი</a></li>
+                            <li role="menuitem"><a ng-click="menuChoiceClick('may')">05 - მაისი</a></li>
+                            <li role="menuitem"><a ng-click="menuChoiceClick('jun')">06 - ივნისი</a></li>
+                            <li role="menuitem"><a ng-click="menuChoiceClick('jul')">07 - ივლისი</a></li>
+                            <li role="menuitem"><a ng-click="menuChoiceClick('aug')">08 - აგვისტო</a></li>
+                            <li role="menuitem"><a ng-click="menuChoiceClick('sep')">09 - სექტემბერი</a></li>
+                            <li role="menuitem"><a ng-click="menuChoiceClick('oct')">10 - ოქტომბერი</a></li>
+                            <li role="menuitem"><a ng-click="menuChoiceClick('nov')">11 - ნოემბერი</a></li>
+                            <li role="menuitem"><a ng-click="menuChoiceClick('dec')">12 - დეკემბერი</a></li>
+                        </ul>
+                    </div>
+                    <input ng-click="openToDatepicker($event)" type="text" class="form-control input-sm" datepicker-options="dateOptions" datepicker-popup="yyyy-MM-dd" ng-model="date_to" is-open="to_opened" on-open-focus="false" close-text="დახურვა" clear-text="გასუფთავება" current-text="დღეს">
+                </div>
+                <a class="btn btn-sm btn-primary" ng-click="generateQueries()"><i class="fa fa-refresh"></i> @DealerManagementSystem.Resources.Translator.Refresh</a>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 text-right">{{invoie_count}}</div>
+                <div class="col-md-9">შეკვეთების რაოდენობა თვეში</div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 text-right">{{avg_invoice_amount}} <i ng-class="currencyClass"></i></div>
+                <div class="col-md-9">შეკვეთის საშუალო ფასი</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="chart_in_return">
+            </div>
+        </div>
+    </div>
+
+</form>

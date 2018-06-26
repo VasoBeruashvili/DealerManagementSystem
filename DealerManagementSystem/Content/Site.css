@@ -1,0 +1,305 @@
+﻿html {
+    /*height: 100%;*/
+}
+
+body {
+    /*height: 100%;*/
+}
+
+@font-face {
+    font-family: 'KA';
+    src: url('../../fonts/bpg_nino_mtavruli_normal.ttf');
+}
+
+*:focus { outline: none !important; }
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+
+
+.profile-line {
+    margin: 0 auto !important;
+    width: 100%;
+    height: 25px;
+    background-color: #f7f7f7;
+    padding-right: 150px;    
+}
+
+.top-navbar-menu {
+    background-color: #fff;
+    width: 100%;
+    color: #777;
+    height: 60px;
+    -webkit-box-shadow: 0px 1px 5px 0px rgba(191,191,191,1);
+    -moz-box-shadow: 0px 1px 5px 0px rgba(191,191,191,1);
+    box-shadow: 0px 1px 5px 0px rgba(191,191,191,1);
+
+    padding: 10px 70px 10px 100px;
+    text-transform: uppercase;
+}
+
+.profile-line a {
+    color: #777;
+}
+
+.profile-line a:hover {
+    color: #000;
+}
+
+.under-menu-line {
+    width: 100%;
+    height: 7px;
+    background-color: #f7f7f7;
+    margin-top: 2px;
+}
+
+.sub-navigation {
+    width: 100%;
+    height: 30px;
+    margin-top: 2px;
+    background-color: #f7f7f7;
+    color: #777;
+
+    padding-top: 4px;
+    padding-left: 115px !important;
+    padding-right: 115px !important;
+}
+
+.top-navbar-menu-content {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.top-navbar-menu-content ul {
+    list-style-type: none;
+    margin-top: -23px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.top-navbar-menu-content ul li {
+    float: left;
+    line-height: 3;
+}
+
+.top-navbar-menu-content ul li a {
+    display: inline-block;
+    color: #407ea7;
+    text-align: center;
+    padding-right: 10px;
+    text-decoration: none;
+    font-size: 15px;
+    font-family: KA;
+}
+
+.top-navbar-menu-content ul li:not(:first-child):not(:last-child):after {
+    content:"|";
+            display: inline-block;
+    text-align: center;
+    padding-right: 10px;
+    text-decoration: none;
+
+    font-family: KA; 
+    font-size: 25px; 
+    color: #407ea7;
+}
+
+
+
+.top-navbar-menu-content ul li a:hover {    
+    cursor: pointer;
+    color: #366a8d;
+}
+
+.top-navbar-menu-search input {
+    margin-top: -17px;
+    /*height: 40px;*/
+    float: right;    
+    width: 200px;
+    /*margin-left: 50px;*/
+}
+
+.top-navbar-menu-search .btn-search {
+    margin-top: -17px;
+    /*height: 40px;*/
+    float: right; 
+    margin-right: 20px;  
+    margin-left: -2px;    
+}
+
+.top-navbar-menu-search p {
+    margin-top: -11px;
+    /*height: 40px;*/
+    float: right;
+    margin-right: 20px;  
+    font-size: 18px;
+    color: #313131;
+}
+
+.top-navbar-menu-search .basket {
+    margin-top: -17px;
+    /*height: 40px;*/
+    float: right;    
+    width: 100px;  
+    margin-right: 30px;
+}
+
+.shopping-cart {
+    background-color: #2fb991;
+    color: #fff;
+}
+
+.shopping-cart:hover {
+    background-color: #2fb991;
+    color: #fff;
+}
+
+.fixed-side-column {
+  width:300px;
+  float: left;
+}
+
+.fluid-middle-column {
+  width:calc(100% - 315px);
+  float: left;
+  margin-left: 15px;
+}
+
+.btn-add{
+    float: left;
+    text-align: center;
+    cursor: pointer; 
+    background-color: #e8f6f9;
+    border: 1px solid #a5b0ac;
+    padding: 2px 8px 2px 8px;
+    color: #808080;
+}
+
+.btn-add:hover{
+    border: 1px solid #959b99;
+}
+
+.txt-quantity{
+    width: 50px;
+    color: #808080;
+    text-align: center;
+    float: right;
+}
+
+
+/* Tree start */
+.tree {
+    border-right: 2px solid #d7d7d7;
+    height: auto;
+    font-size: 13px;
+}
+
+.tree ul {
+    list-style: none outside none;
+}
+
+.tree li a {
+    line-height: 25px;
+    color: #407ea7;
+}
+
+.tree > ul > li > a {
+    color: #3B4C56;
+    display: block;
+    font-weight: normal;
+    position: relative;
+    text-decoration: none;
+    color: #407ea7;
+}
+
+.tree li.parent > a {
+    padding: 0 0 0 28px;
+}
+
+.tree li.parent > a:before {
+    background-image: url("ress/images/plus_minus_icons.png");
+    background-position: 25px center;
+    content: ""; 
+    display: block;
+    height: 21px;
+    left: 0;
+    position: absolute;
+    top: 2px;
+    vertical-align: middle;
+    width: 23px;
+}
+
+.tree ul li.active > a:before {
+    background-position: 0 center;
+}
+
+.tree ul li ul {
+    border-left: 1px solid #D9DADB;
+    display: none;
+    margin: 0 0 0 12px;
+    overflow: hidden;
+    padding: 0 0 0 25px;
+}
+
+.tree ul li ul li {
+    position: relative;
+}
+
+.tree ul li ul li:before {
+    border-bottom: 1px dashed #E2E2E3;
+    content: "";
+    left: -20px;
+    position: absolute;
+    top: 12px;
+    width: 15px;
+}
+/* Tree end */
+
+.not-available {
+    color: #b7b7b7;
+}
+
+#overlay {
+    position: fixed;
+    background-image: url('../../Content/ress/images/loading.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000000;
+    background-color: #FFF;
+    opacity: 0.8;
+}
+
+.five-minus{
+    color: red;
+}
+.five-plus{
+    color: green;
+}
+.equals-five{
+    font-weight: bold;
+}

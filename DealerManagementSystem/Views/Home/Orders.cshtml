@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.PreTitle = DealerManagementSystem.Resources.Translator.Main;
+    ViewBag.Title = DealerManagementSystem.Resources.Translator.Orders;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    var currentLanguage = "@ViewBag.currentLanguage";
+</script>
+<script src="~/Scripts/app/orders.js"></script>
+
+<div ng-app="orders-app" ng-controller="orders-ctrl" ng-init="init()" style="height: 100%;">    
+    <div class="col-md-12">    
+        <div style="float: right; margin-bottom: 10px;">
+            <select class="form-control input-sm" ng-model="selectedOrderByOption" ng-options="orderByOption as orderByOption.name for orderByOption in orderByOptions"></select>
+        </div>            
+        <table class="table table-striped table-bordered" style="font-size: 13px; border-bottom: 1px solid #d7d7d7; border-top: 1px solid #d7d7d7;">
+            <thead>
+                <tr style="background-color: #EAF5F9; color: #407ea7;">
+                    <th style="min-width: 20px;"></th>
+                    <th>@DealerManagementSystem.Resources.Translator.Date</th>
+                    <th>@DealerManagementSystem.Resources.Translator.Address</th>
+                    <th>@DealerManagementSystem.Resources.Translator.Status</th>
+                    <th>@DealerManagementSystem.Resources.Translator.DueDate</th>
+                    <th>@DealerManagementSystem.Resources.Translator.OverdueDays</th>
+                    <th>@DealerManagementSystem.Resources.Translator.Payable</th>
+                    <th>@DealerManagementSystem.Resources.Translator.Paid</th>
+                    <th>@DealerManagementSystem.Resources.Translator.Unpaid</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="order in orders | orderBy: orderByFilter()">
+                    <td style="text-align: center; cursor: pointer;" ng-click="generateInvoicePdf(order.id)"><i ng-show="{{order.waybillStatus !== null}}" class="fa fa-file-pdf-o"></i></td>
+                    <td>{{order.tdate}}</td>
+                    <td>{{order.address}}</td>
+                    <td>{{order.status}}</td>
+                    <td>{{order.dueDate}}</td>
+                    <td style="{{order.restStyle}}; text-align: right;">{{order.overdueDays}}</td>
+                    <td style="text-align: right;">{{order.debit}}</td>
+                    <td style="text-align: right;">{{order.credit}}</td>
+                    <td style="text-align: right;">{{order.rest}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

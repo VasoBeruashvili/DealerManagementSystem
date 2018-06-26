@@ -1,0 +1,66 @@
+﻿@model Contragent
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>სისტემაში შესვლა</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: auto;
+            font-size: 12px;
+            font-family: "Lucida Grande", sans-serif;
+            background-color: #fcfcfc !important;
+        }
+
+        * {
+            line-height: 1.2em;
+            margin: 0;
+            padding: 0;
+            outline: 0;
+        }
+
+        *:focus { outline: none !important; }
+    </style>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/ress/bootstrap-flat.min.css" rel="stylesheet" />
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="panel panel-primary" style="margin-top: 150px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-lock"></i> სისტემაში შესვლა</h3>
+                    </div>
+                    <div class="panel-body">
+                        @using (Html.BeginForm("login", "account", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <section>
+                                @if (ViewBag.Error != null)
+                                {
+                                    <div class="alert small alert-danger">
+                                        @ViewBag.Error
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.UserName, new { id = "userName", placeholder = "შესვლის სახელი", @class = "form-control input", autofocus = true })
+                                </div>
+                                <div class="form-group">
+                                    @Html.PasswordFor(m => m.Password, new { id = "password", placeholder = "პაროლი", @class = "form-control input" })
+                                </div>
+                                <button type="submit" name="autenf" class="btn btn-success" style="float: right;"><i class="fa fa-sign-in"></i> შესვლა</button>
+                            </section>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

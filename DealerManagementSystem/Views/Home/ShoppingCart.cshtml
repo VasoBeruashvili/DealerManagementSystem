@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.PreTitle = DealerManagementSystem.Resources.Translator.Main;
+    ViewBag.Title = DealerManagementSystem.Resources.Translator.ShoppingCart;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    var currentLanguage = "@ViewBag.currentLanguage";
+</script>
+<script src="~/Scripts/app/shopping-cart.js"></script>
+<script src="~/Scripts/app/directives.js"></script>
+
+<div ng-app="shoppingCart-app" ng-controller="shoppingCart-ctrl" ng-init="init()" style="height: 100%;">    
+    <div class="col-md-12">                
+        <div style="margin-bottom: 10px;" class="form-inline">
+            <select class="form-control input-sm" ng-model="selectedContragentAddress" ng-options="contragentAddress as contragentAddress.address for contragentAddress in contragentAddresses"></select>
+            <select style="float: right;" class="form-control input-sm" ng-model="selectedOrderByOption" ng-options="orderByOption as orderByOption.name for orderByOption in orderByOptions"></select>
+        </div>            
+        <table class="table table-hover" style="font-size: 13px; border-bottom: 1px solid #d7d7d7; border-top: 1px solid #d7d7d7;">
+            <thead>
+                <tr style="background-color: #EAF5F9; color: #407ea7;">
+                    @*<th>PID</th>*@
+                    <th>@DealerManagementSystem.Resources.Translator.Code</th>
+                    @*<th>@DealerManagementSystem.Resources.Translator.Manufacturer</th>*@
+                    <th>@DealerManagementSystem.Resources.Translator.Name</th>                    
+                    <th>@DealerManagementSystem.Resources.Translator.Stock</th>
+                    <th>@DealerManagementSystem.Resources.Translator.Currency</th>  
+                    <th>@DealerManagementSystem.Resources.Translator.Price</th>                  
+                    <th style="width: 50px;">@DealerManagementSystem.Resources.Translator.Ordered</th>
+                    <th>@DealerManagementSystem.Resources.Translator.Total</th>
+                    <th style="width: 75px;"></th>
+                    <th style="width: 30px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="product in products | orderBy: orderByFilter()" ng-class="'{{product.rowClass}}'" style="cursor: pointer;">
+                    @*<td style="color: #407ea7; font-weight: bold;" ng-click="showProductDetails(product.id)">{{product.id}}</td>*@
+                    <td ng-click="showProductDetails(product.id)">{{product.code}}</td>
+                    @*<td ng-click="showProductDetails(product.id)">{{product.manufacturer}}</td>*@
+                    <td ng-click="showProductDetails(product.id)">{{product.name}}</td>                    
+                    <td ng-click="showProductDetails(product.id)" style="text-align: right;" ng-class="'{{product.cellClass}}'">{{product.displayStock}}</td>
+                    <td ng-click="showProductDetails(product.id)">{{product.currency}}</td>   
+                    <td ng-click="showProductDetails(product.id)" style="text-align: right;">{{product.price}}</td>                 
+                    <td><input type="text" class="txt-quantity" ng-model="product.ordered" select-on-click /></td>
+                    <td ng-click="showProductDetails(product.id)" style="text-align: right;">{{product.totalSum}}</td>
+                    <td><div class="btn-add" ng-click="updateShoppingCart(product)">@DealerManagementSystem.Resources.Translator.Update</div></td>
+                    <td><div class="btn-add" ng-click="removeShoppingCart(product)"><i class="fa fa-remove"></i></div></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <a class="btn btn-success" style="float: right;" ng-click="placeOrder()">@DealerManagementSystem.Resources.Translator.PlaceOrder</a>
+        <span style="float: right; margin-right: 68px; margin-top: 5px; font-weight: bold;">{{subTotalSum}}</span>
+    </div>
+</div>

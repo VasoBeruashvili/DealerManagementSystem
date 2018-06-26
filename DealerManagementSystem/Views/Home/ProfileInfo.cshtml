@@ -1,0 +1,253 @@
+﻿@{
+    ViewBag.PreTitle = DealerManagementSystem.Resources.Translator.Main;
+    ViewBag.Title = DealerManagementSystem.Resources.Translator.Profile;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Contragent contragent = ViewBag.contragent;
+
+    var c1 = Convert.ToDateTime(contragent.Col1_543).AddDays(Convert.ToInt32(contragent.Col2_544)).ToString("yyyy.MM.dd");
+    var c2 = Convert.ToDateTime(c1).Subtract(Convert.ToDateTime(DateTime.Now.ToString("yyyy.MM.dd"))).Days;
+
+    var c4 = contragent.Col3_545 == "0" ? DealerManagementSystem.Resources.Translator.No : DealerManagementSystem.Resources.Translator.Yes;
+    var c5 = contragent.Col4_546 == "0" ? DealerManagementSystem.Resources.Translator.No : DealerManagementSystem.Resources.Translator.Yes;
+    var c6 = contragent.Col5_547 == "0" ? DealerManagementSystem.Resources.Translator.No : DealerManagementSystem.Resources.Translator.Yes;
+    var c7 = contragent.Col6_548 == "0" ? DealerManagementSystem.Resources.Translator.No : DealerManagementSystem.Resources.Translator.Yes;
+
+    DealerManagementSystem.Utils.BusinessLogic _bl = new DealerManagementSystem.Utils.BusinessLogic();
+}
+
+<script src="~/Scripts/srcs/ui-bootstrap-tpls-0.13.1.min.js"></script>
+<script>
+    var currentLanguage = "@ViewBag.currentLanguage";
+</script>
+<script src="~/Scripts/app/profile-info.js"></script>
+
+<div ng-app="profileInfo-app" ng-controller="profileInfo-ctrl">  
+    <div class="col-md-6" style="background-color: #f7f7f7; padding: 15px;">        
+        <table class="table table-bordered">
+            <tbody>
+                @if (!string.IsNullOrEmpty(contragent.UserName))
+                {
+                    <tr>
+                        <td>@DealerManagementSystem.Resources.Translator.UserName</td>
+                        <td>@contragent.UserName</td>
+                    </tr>
+                }
+                @if (!string.IsNullOrEmpty(contragent.Name))
+                {
+                    <tr>
+                        <td>@DealerManagementSystem.Resources.Translator.Company</td>
+                        <td>@contragent.Name</td>
+                    </tr>
+                }
+                @if (!string.IsNullOrEmpty(contragent.Code))
+                {
+                    <tr>
+                        <td>@DealerManagementSystem.Resources.Translator.Code</td>
+                        <td>@contragent.Code</td>
+                    </tr>
+                }
+                @if (!string.IsNullOrEmpty(contragent.Phone))
+                {
+                    <tr>
+                        <td>@DealerManagementSystem.Resources.Translator.Phone</td>
+                        <td>@contragent.Phone</td>
+                    </tr>
+                }
+                @if (!string.IsNullOrEmpty(contragent.Address))
+                {
+                    <tr>
+                        <td>@DealerManagementSystem.Resources.Translator.Address</td>
+                        <td>@contragent.Address</td>
+                    </tr>
+                }
+                @if (contragent.ContragentDiscounts != null && contragent.ContragentDiscounts.Count > 0)
+                {
+                    <tr>
+                        <td>
+                            @DealerManagementSystem.Resources.Translator.Discount                            
+                        </td>
+                        <td>
+                            <a data-toggle="collapse" data-target="#t5" style="float: right; cursor: pointer;"><i class="fa fa-angle-down"></i></a>                            
+                            <table class="table table-bordered collapse" style="margin-top: 10px; margin-bottom: 0;" id="t5">
+                                <tbody>
+                                    @foreach (ContragentDiscount cd in contragent.ContragentDiscounts)
+                                    {
+
+                                        <tr>
+                                            <td>
+                                                @cd.Name
+                                            </td>
+                                            <td style="font-weight: bold;">@cd.Discount%</td>
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                }
+                @if (!string.IsNullOrEmpty(c1))
+                {
+                    <tr>
+                        <td>@DealerManagementSystem.Resources.Translator.Col1: @contragent.Col1_543</td>
+                        <td>@DealerManagementSystem.Resources.Translator.Expiration: <b>@c1</b></td>
+                    </tr>
+                }
+                @if (c2 != 0)
+                {
+                    <tr>
+                        <td>@DealerManagementSystem.Resources.Translator.Col2: @contragent.Col2_544</td>
+                        <td>@DealerManagementSystem.Resources.Translator.Days: <b>@c2</b></td>
+                    </tr>
+                }
+                @if (!string.IsNullOrEmpty(contragent.Col13_555))
+                {
+                    <tr>
+                        <td>@DealerManagementSystem.Resources.Translator.Col3: <i>@contragent.Col13_555</i></td>
+                        <td style="color: green; font-weight: bold;">@DealerManagementSystem.Resources.Translator.Active</td>
+                    </tr>
+                }
+                @if (!string.IsNullOrEmpty(c4) && c4 != "არა" && c4 != "No")
+                {
+                    <tr>
+                        <td>
+                            @DealerManagementSystem.Resources.Translator.Col4: @c4
+                        </td>
+                        <td>
+                            <a data-toggle="collapse" data-target="#t1" style="float: right; cursor: pointer;"><i class="fa fa-angle-down"></i></a>
+                            <table class="table table-bordered collapse" style="margin-top: 10px; margin-bottom: 0;" id="t1">
+                                <tbody>
+                                    <tr><td>@DealerManagementSystem.Resources.Translator.Col8: <b><i>@contragent.Col7_549_C4</i></b></td></tr>
+                                    <tr><td>@DealerManagementSystem.Resources.Translator.Col9: <b><i>@contragent.Col8_550_C4</i></b></td></tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                }
+                @if (!string.IsNullOrEmpty(c5) && c5 != "არა" && c5 != "No")
+                {
+                    <tr>
+                        <td>
+                            @DealerManagementSystem.Resources.Translator.Col5: @c5
+                        </td>
+                        <td>
+                            <a data-toggle="collapse" data-target="#t2" style="float: right; cursor: pointer;"><i class="fa fa-angle-down"></i></a>
+                            <table class="table table-bordered collapse" style="margin-top: 10px; margin-bottom: 0;" id="t2">
+                                <tbody>
+                                    <tr><td>@DealerManagementSystem.Resources.Translator.Col8: <b><i>@contragent.Col7_557_C5</i></b></td></tr>
+                                    <tr><td>@DealerManagementSystem.Resources.Translator.Col9: <b><i>@contragent.Col8_558_C5</i></b></td></tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                }
+                @if (!string.IsNullOrEmpty(c6) && c6 != "არა" && c6 != "No")
+                {
+                    <tr>
+                        <td>
+                            @DealerManagementSystem.Resources.Translator.Col6: @c6
+                        </td>
+                        <td>
+                            <a data-toggle="collapse" data-target="#t3" style="float: right; cursor: pointer;"><i class="fa fa-angle-down"></i></a>
+                            <table class="table table-bordered collapse" style="margin-top: 10px; margin-bottom: 0;" id="t3">
+                                <tbody>
+                                    <tr><td>@DealerManagementSystem.Resources.Translator.Col8: <b><i>@contragent.Col7_559_C6</i></b></td></tr>
+                                    <tr><td>@DealerManagementSystem.Resources.Translator.Col9: <b><i>@contragent.Col8_560_C6</i></b></td></tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                }
+                @if (!string.IsNullOrEmpty(c7) && c7 != "არა" && c7 != "No")
+                {
+                    <tr>
+                        <td>
+                            @DealerManagementSystem.Resources.Translator.Col7: @c7
+                        </td>
+                        <td>
+                            <a data-toggle="collapse" data-target="#t4" style="float: right; cursor: pointer;"><i class="fa fa-angle-down"></i></a>
+                            <table class="table table-bordered collapse" style="margin-top: 10px; margin-bottom: 0;" id="t4">
+                                <tbody>
+                                    <tr><td>@DealerManagementSystem.Resources.Translator.Col8: <b><i>@contragent.Col7_561_C7</i></b></td></tr>
+                                    <tr><td>@DealerManagementSystem.Resources.Translator.Col9: <b><i>@contragent.Col8_562_C7</i></b></td></tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                }
+                @if (!string.IsNullOrEmpty(contragent.Col9_551))
+                {
+                    <tr>
+                        <td>@DealerManagementSystem.Resources.Translator.Col10</td>
+                        <td style="font-weight: bold;">@contragent.Col9_551</td>
+                    </tr>
+                }
+                @if (!string.IsNullOrEmpty(contragent.Col10_552))
+                {
+                    <tr>
+                        <td>@DealerManagementSystem.Resources.Translator.Col11</td>
+                        <td style="font-weight: bold;">@contragent.Col10_552</td>
+                    </tr>
+                }
+                @if (!string.IsNullOrEmpty(contragent.Col11_553))
+                {
+                    <tr>
+                        <td>@DealerManagementSystem.Resources.Translator.Col12</td>
+                        <td style="font-weight: bold;">@contragent.Col11_553</td>
+                    </tr>
+                }
+                @if (!string.IsNullOrEmpty(contragent.Col12_554))
+                {
+                    <tr>
+                        <td>@DealerManagementSystem.Resources.Translator.Col13</td>
+                        <td style="font-weight: bold;">@contragent.Col12_554</td>
+                    </tr>
+                }
+                @if (_bl.GetContragentSpecialPrice() != null)
+                {
+                    <tr>
+                        <td>@DealerManagementSystem.Resources.Translator.Col14</td>
+                        <td style="font-weight: bold;">@_bl.GetContragentSpecialPrice().Name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>  
+        
+        <a style="cursor: pointer;" ng-click="openPasswordChangeModal()">@DealerManagementSystem.Resources.Translator.ChangePassword</a>      
+    </div>   
+    
+
+
+    <!--Password change Modal Start-->
+    <script type="text/ng-template" id="PasswordChangeModal.html">
+        <div class="modal-header">
+            <a class="close" ng-click="cancel()">&times;</a>
+            <h4 class="modal-title">@DealerManagementSystem.Resources.Translator.ChangePassword</h4>
+        </div>
+
+        <div class="modal-body">
+            <div class="input-group" style="width: 100% !important;">
+                <span class="input-group-addon" style="width: 200px; text-align: left;"><i class="fa fa-keyboard-o"></i> @DealerManagementSystem.Resources.Translator.OldPassword</span>
+                <input id="oldPwd" class="form-control" type="password" ng-model="oldPwd" style="width: 100% !important;" />                
+            </div>
+            <br />
+            <div class="input-group" style="width: 100% !important;">
+                <span class="input-group-addon" style="width: 200px; text-align: left;"><i class="fa fa-keyboard-o"></i> @DealerManagementSystem.Resources.Translator.NewPassword</span>
+                <input id="newPwd" class="form-control" type="password" ng-model="newPwd" style="width: 100% !important;" />
+            </div>
+            <br />            
+            <br />
+            <div class="input-group" style="width: 100% !important;">
+                <span class="input-group-addon" style="width: 200px; text-align: left;"><i class="fa fa-keyboard-o"></i> @DealerManagementSystem.Resources.Translator.RepeatPassword</span>
+                <input id="repeatPwd" class="form-control" type="password" ng-model="repeatPwd" style="width: 100% !important;" />
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <a class="btn btn-primary" ng-click="save()" style="width: 100px;"><i class="fa fa-save"></i> @DealerManagementSystem.Resources.Translator.Save</a>
+            <a class="btn btn-default" ng-click="cancel()" style="width: 100px;"><i class="fa fa-close"></i> @DealerManagementSystem.Resources.Translator.Close</a>
+        </div>
+    </script>
+    <!--Password change Modal End-->
+</div>
